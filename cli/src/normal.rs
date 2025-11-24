@@ -18,7 +18,6 @@ pub fn is_normal(m: &Mount) -> bool {
     && m.disk.as_ref().map_or(true, |d| !d.image) // not real
     && !m.info.bound // removing bound mounts
     && m.info.fs_type != "squashfs" // quite ad-hoc...
-    && !is_system_path(&m.info.mount_point)
 }
 
 #[cfg(target_os = "macos")]
@@ -38,6 +37,7 @@ fn is_system_path(path: &Path) -> bool {
     false
 }
 
+#[allow(dead_code)]
 #[cfg(target_os = "linux")]
 fn is_system_path(path: &Path) -> bool {
     path.starts_with("/boot")
